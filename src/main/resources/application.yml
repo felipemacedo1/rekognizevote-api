@@ -1,0 +1,70 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: rekognizevote-api
+  profiles:
+    active: dev
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  level:
+    com.rekognizevote: DEBUG
+    software.amazon.awssdk: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+aws:
+  region: us-east-1
+  dynamodb:
+    endpoint: http://localhost:8000
+  s3:
+    endpoint: http://localhost:4566
+    bucket: rekognizevote-dev
+  rekognition:
+    endpoint: http://localhost:4566
+
+jwt:
+  secret: dev-secret-key-change-in-production
+  expiration: 3600000 # 1 hour
+  refresh-expiration: 2592000000 # 30 days
+
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+aws:
+  region: us-east-1
+  dynamodb:
+    endpoint: http://dynamodb-local:8000
+  s3:
+    endpoint: http://localstack:4566
+    bucket: rekognizevote-dev
+  rekognition:
+    endpoint: http://localstack:4566
