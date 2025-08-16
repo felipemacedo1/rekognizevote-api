@@ -34,12 +34,15 @@ public class DynamoUserRepository implements UserRepository {
 
     @Override
     public Mono<User> findByEmail(Email email) {
-        return Mono.fromFuture(
+        return Mono.fromCallable(() -> 
             table.index("email-index")
                 .query(QueryConditional.keyEqualTo(
                     Key.builder().partitionValue(email.value()).build()))
-        ).flatMap(result -> 
-            Mono.justOrEmpty(result.items().stream().findFirst())
+        ).flatMap(publisher -> 
+            Mono.from(publisher)
+                .flatMap(result -> 
+                    Mono.justOrEmpty(result.items().stream().findFirst())
+                )
         );
     }
 

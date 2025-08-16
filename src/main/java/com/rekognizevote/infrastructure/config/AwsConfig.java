@@ -9,6 +9,8 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.rekognition.RekognitionAsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
 
@@ -50,6 +52,32 @@ public class AwsConfig {
     @Bean
     public S3AsyncClient s3AsyncClient() {
         var builder = S3AsyncClient.builder()
+            .region(Region.of(region))
+            .credentialsProvider(DefaultCredentialsProvider.create());
+
+        if (!s3Endpoint.isEmpty()) {
+            builder.endpointOverride(URI.create(s3Endpoint));
+        }
+
+        return builder.build();
+    }
+
+    @Bean
+    public S3Client s3Client() {
+        var builder = S3Client.builder()
+            .region(Region.of(region))
+            .credentialsProvider(DefaultCredentialsProvider.create());
+
+        if (!s3Endpoint.isEmpty()) {
+            builder.endpointOverride(URI.create(s3Endpoint));
+        }
+
+        return builder.build();
+    }
+
+    @Bean
+    public S3Presigner s3Presigner() {
+        var builder = S3Presigner.builder()
             .region(Region.of(region))
             .credentialsProvider(DefaultCredentialsProvider.create());
 

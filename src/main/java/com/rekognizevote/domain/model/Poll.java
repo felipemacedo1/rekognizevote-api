@@ -82,8 +82,9 @@ public class Poll {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getStatus() { return status != null ? status.name() : null; }
+    public PollStatus getStatus() { return status; }
     public void setStatus(String status) { this.status = status != null ? PollStatus.valueOf(status) : null; }
+    public void setStatus(PollStatus status) { this.status = status; }
 
     public boolean isPrivate() { return isPrivate; }
     public void setPrivate(boolean isPrivate) { this.isPrivate = isPrivate; }

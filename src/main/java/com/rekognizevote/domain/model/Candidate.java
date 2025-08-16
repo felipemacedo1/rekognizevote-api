@@ -29,7 +29,17 @@ public record Candidate(
         return new Candidate(id, name, description, imageUrl, voteCount + 1);
     }
 
+    public double getPercentage() {
+        return calculatePercentage(voteCount);
+    }
+
     public double calculatePercentage(int totalVotes) {
         return totalVotes == 0 ? 0.0 : (double) voteCount / totalVotes * 100.0;
     }
+
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public String getImageUrl() { return imageUrl; }
+    public int getVoteCount() { return voteCount; }
 }
