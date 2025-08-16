@@ -9,11 +9,9 @@ import com.rekognizevote.domain.valueobject.UserId;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
-@Transactional
 public class UserCommandService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
