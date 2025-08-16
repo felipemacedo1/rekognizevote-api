@@ -33,6 +33,14 @@ Sistema de votação seguro com verificação facial usando AWS Rekognition.
 ### Upload
 - `GET /api/v1/upload/presigned-url` - URL para upload de imagem
 
+## 📘 Documentação da API
+
+A documentação completa dos endpoints está disponível via **Swagger UI** após iniciar a aplicação:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
 ## 🔧 Desenvolvimento
 
 ### Pré-requisitos
